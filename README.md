@@ -2,5 +2,5 @@
 
 ## 数据结构
 
-1. [动态数组](./src/main/java/com/chen/base/datastruct/array/README.md)
+1. [动态数组](./src/main/java/com/chen/base/datastruct/array)
 
