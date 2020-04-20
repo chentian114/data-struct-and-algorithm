@@ -61,8 +61,8 @@ public class Array<E> {
 
         E e = data[index];
 
-        for (int i = index; i < size ; i++){
-            data[i] = data[i+1];
+        for (int i = index+1; i < size ; i++){
+            data[i] = data[i-1];
         }
         size -- ;
         data[size] = null;
