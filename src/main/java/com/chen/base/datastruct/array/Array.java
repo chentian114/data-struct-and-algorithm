@@ -62,7 +62,7 @@ public class Array<E> {
         E e = data[index];
 
         for (int i = index+1; i < size ; i++){
-            data[i] = data[i-1];
+            data[i-1] = data[i];
         }
         size -- ;
         data[size] = null;
@@ -156,7 +156,9 @@ public class Array<E> {
 
         Array<String> myArr = new Array<>();
         myArr.addFirst("hello");
-        myArr.add(1,"world");
+        myArr.addLast("world");
+        myArr.add(2,"!");
+        System.out.println(myArr);
 
         for (int i = 0 ; i< 10 ; i++){
             myArr.addLast(String.valueOf(i));
@@ -165,14 +167,25 @@ public class Array<E> {
 
         System.out.println(myArr.contains("hello"));
         System.out.println(myArr.contains("10"));
+        System.out.println(myArr.get(0));
+        System.out.println(myArr.getSize());
+        System.out.println(myArr.isEmpty());
 
-        for (int i = 9 ; i > 2 ; i--){
+
+        System.out.println(myArr);
+        myArr.removeLast();
+        System.out.println(myArr);
+        myArr.removeFirst();
+        System.out.println(myArr);
+        for (int i = 8 ; i > 2 ; i--){
             myArr.remove(i);
         }
-
         System.out.println(myArr);
 
         myArr.remove(2);
+        System.out.println(myArr);
+
+        myArr.set(1,"hello");
         System.out.println(myArr);
 
     }
