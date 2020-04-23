@@ -4,73 +4,75 @@ import java.util.Arrays;
 
 /**
  * @author: Chentian
- * @date: Created in 2020/4/23 6:12
- * @desc 固定数组循环队列，使用(front,tail,size)维护
- * 队列为空： size == 0
- * 队列为满： size == data.length
+ * @date: Created in 2020/4/24 6:10
+ * @desc 固定数组循环队列，使用(front,tail)维护
+ * 队列为空：front == tail
+ * 队列为满：(tail + 1) % data.length == front,tail指向下一个可存放入队元素的位置
+ * 队列容量：data.length - 1
  */
-public class FixLoopQueue<E> implements Queue<E> {
-
-    private E[] data ;
+public class FixLoopQueue2<E> implements Queue<E> {
+    private E[] data;
     private int front;
     private int tail;
-    private int size ;
 
-    public FixLoopQueue(int capacity){
-        this.front = 0;
-        this.tail = 0;
-        this.size = 0;
+    public FixLoopQueue2(int capacity){
         this.data = (E[]) new Object[capacity];
+        this.front = 0 ;
+        this.tail = 0;
     }
 
-    public FixLoopQueue() {
+    public FixLoopQueue2(){
         this(10);
     }
 
     @Override
     public boolean isEmpty() {
-        if(front == tail && size == 0 ){
-            return true;
-        }
-        return false;
+        return front == tail;
     }
 
     @Override
     public int getSize() {
-        return size;
+        if( tail == front){
+            return 0;
+        }
+        else if(tail > front){
+            return tail - front;
+        }else {
+            return tail + data.length - front;
+        }
     }
 
     public int getCapacity(){
-        return data.length;
+        //浪费一个tail指向的空间，用于区分队列为空或已满
+        return data.length - 1;
     }
 
     @Override
-    public void enqueue(E o) {
-        if(getSize() == data.length){
-            throw new IllegalArgumentException("queue is full");
+    public void enqueue(E e) {
+        //判断队列是否已满
+        if( (tail + 1) % data.length == front ){
+            throw new IllegalArgumentException("queue is full!");
         }
-        data[tail] = o;
-        //当tail在末尾位置时，重置到0位置
-        tail = (tail == data.length -1) ? 0 : tail + 1;
-        size ++;
+        data[tail] = e;
+        tail = (tail + 1) % data.length;
     }
 
     @Override
     public E dequeue() {
-        if(getSize() == 0 ){
-            throw new IllegalArgumentException("queue is empty");
+        if( isEmpty() ){
+            throw new IllegalArgumentException("queue is empty!");
         }
-
         E e = data[front];
         data[front] = null;
-        front = ( front == data.length - 1) ? 0 : front+1;
-        size -- ;
-
+        front = (front + 1) % data.length;
         return e;
     }
 
     @Override
     public E getFront() {
+        if(isEmpty()){
+            throw new IllegalArgumentException("queue is empty!");
+        }
         return data[front];
     }
 
@@ -80,6 +82,7 @@ public class FixLoopQueue<E> implements Queue<E> {
         res.append("Queue: ");
         res.append("front [");
         int index = front;
+        int size = getSize();
         for(int i = 0 ; i < size ; i ++){
             res.append(data[index]);
             if(i != getSize() - 1)
@@ -91,7 +94,7 @@ public class FixLoopQueue<E> implements Queue<E> {
     }
 
     public static void main(String[] args) {
-        FixLoopQueue<Integer> queue = new FixLoopQueue<>(12);
+        FixLoopQueue2<Integer> queue = new FixLoopQueue2<>(12);
         System.out.println(queue.isEmpty());
         System.out.println(queue.getCapacity());
 
@@ -117,9 +120,9 @@ public class FixLoopQueue<E> implements Queue<E> {
         System.out.println(Arrays.toString(queue.data));
 
         queue.enqueue(15);
-        queue.enqueue(16);
         System.out.println(queue);
         System.out.println(Arrays.toString(queue.data));
-//        queue.enqueue(17);
+
+//        queue.enqueue(16);
     }
 }
