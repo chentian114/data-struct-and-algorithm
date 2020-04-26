@@ -4,4 +4,5 @@
 
 1. [动态数组](./src/main/java/com/chen/base/datastruct/array)
 2. [循环队列](./src/main/java/com/chen/base/datastruct/queue)
+3. [链表](./src/main/java/com/chen/base/datastruct/linked)
 
