@@ -6,4 +6,5 @@
 2. [栈](./src/main/java/com/chen/base/datastruct/stack)
 3. [循环队列](./src/main/java/com/chen/base/datastruct/queue)
 4. [链表](./src/main/java/com/chen/base/datastruct/linked)
+5. [二分搜索树](./src/main/java/com/chen/base/datastruct/bst)
 
